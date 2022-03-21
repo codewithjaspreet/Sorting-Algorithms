@@ -4,15 +4,30 @@ import java.util.*;
 public class Main {
 
   public static void countSort(int[] arr, int min, int max) {
-   //write your code here
-    
 
-   int range  = max - min +1;
+    // step 1  > find max and min of the array
+
+    
+   //write your code her
+   int range  = max - min +1;  
+
+   // find range = max -  min + 1
+
    int[] farr = new int[range];
+
+   // initialise the frerquency array
+
+
    for(int i  = 0   ; i < arr.length  ;i++){
+     
      int idx = arr[i] - min;
      farr[idx]++;
+
    }
+
+   // store frequency of the elements
+
+
 
    for(int i = 1 ; i  < farr.length ;i++){
      farr[i] = farr[i]  +farr[i-1];
