@@ -1,76 +1,58 @@
-import java.io.*;
-import java.util.*;
+import java.util.Scanner;
 
-public class Main {
-
-  public static void countSort(int[] arr, int min, int max) {
-
-    // step 1  > find max and min of the array
-
-    
-   //write your code her
-   int range  = max - min +1;  
-
-   // find range = max -  min + 1
-
-   int[] farr = new int[range];
-
-   // initialise the frerquency array
+public class counting_sort {
 
 
-   for(int i  = 0   ; i < arr.length  ;i++){
-     
-     int idx = arr[i] - min;
-     farr[idx]++;
+    public  static  int[] countSort(int[] arr){
 
-   }
+        // find max element
 
-   // store frequency of the elements
+        int max = Integer.MIN_VALUE;
 
+        for(int a : arr) max = Math.max(a , max);
 
-
-   for(int i = 1 ; i  < farr.length ;i++){
-     farr[i] = farr[i]  +farr[i-1];
-
-   }
-   int[] ans = new int[arr.length];
-   for(int i = arr.length  - 1 ; i>=0 ; i--){
-     
-     int val = arr[i];
-     int pos = farr[val - min];
-     int idx  = pos - 1;
-     ans[idx] = val;
-     farr[val - min]--;
+        int[] count = new int[max + 1];
 
 
-   }
+        // creating the frequency array
 
-   for(int i =  0 ; i <ans.length ; i++){
-        arr[i] = ans[i];
-   }
+        for(int  i = 0 ; i < arr.length ; i++){
+            count[arr[i]]++;
 
-   
-  }
+        }
+        // cummalative freq array
 
-  public static void print(int[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      System.out.println(arr[i]);
+        for(int  i = 1 ; i < count.length ; i++){
+
+            count[i] = count[i] + count[i-1];
+        }
+        
+        // most crucial step
+        // making the final ans array
+        
+        int[] sortedAns =new int[arr.length];
+
+        for(int i  = arr.length - 1; i >=0 ; i--){
+
+            sortedAns[count[arr[i]] - 1] = arr[i];
+            count[arr[i]]--;
+        }
+
+        return sortedAns;
     }
-  }
 
-  public static void main(String[] args) throws Exception {
-    Scanner scn = new Scanner(System.in);
-    int n = scn.nextInt();
-    int[] arr = new int[n];
-    int max = Integer.MIN_VALUE;
-    int min = Integer.MAX_VALUE;
-    for (int i = 0; i < n; i++) {
-      arr[i] = scn.nextInt();
-      max = Math.max(max, arr[i]);
-      min = Math.min(min, arr[i]);
+    public static void main(String[] args) {
+        Scanner s =   new Scanner(System.in);
+
+
+
+        int[] arr ={4, 3, 12, 1, 5, 5, 3, 94, 3, 12, 1, 5, 5, 3, 9};
+
+
+        int[] ans = countSort(arr);
+        for (int a : ans){
+
+            System.out.print(a + " ");
+        }
     }
-    countSort(arr,min,max);
-    print(arr);
-  }
-
 }
